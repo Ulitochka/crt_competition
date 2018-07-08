@@ -38,7 +38,7 @@ from tensorflow.python.platform import gfile
 from tensorflow.python.util import compat
 
 MAX_NUM_WAVS_PER_CLASS = 2 ** 27 - 1  # ~134M
-UNKNOWN_WORD_LABEL = '_unknown_'
+UNKNOWN_WORD_LABEL = 'unknown'
 UNKNOWN_WORD_INDEX = 1
 BACKGROUND_NOISE_DIR_NAME = '_background_noise_'
 RANDOM_SEED = 59185
@@ -433,13 +433,11 @@ class AudioProcessor(object):
             # Run the graph to produce the output audio.
             data[i - offset, :] = sess.run(self.mfcc_, feed_dict=input_dict).flatten()
             # print(self.word_to_index)
-            if test_data_type:
-                self.word_to_index["unknown"] = 1
-                label_index = self.word_to_index[sample['label']]
-                labels[i - offset, label_index] = 1
-            else:
-                label_index = self.word_to_index[sample['label']]
-                labels[i - offset, label_index] = 1
+
+            self.word_to_index["unknown"] = 1
+            label_index = self.word_to_index[sample['label']]
+            labels[i - offset, label_index] = 1
+
 
         return data, labels
 
