@@ -1,0 +1,4 @@
+numpy == 1.14.5
+scipy == 0.18.5
+tensorflow-gpu == 1.8.0
+pandas == 0.20.1
