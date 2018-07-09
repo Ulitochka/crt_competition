@@ -1,5 +1,5 @@
 
-result_file = '/home/mdomrachev/PycharmProjects/competitions/speech_commands/crt_competition/result/result.csv'
+result_file = '/home/mickail/reposit/crt_competition/result/result.csv'
 
 data = [el.strip().split() for el in open(result_file).readlines()]
 
