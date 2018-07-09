@@ -280,7 +280,7 @@ def main(_):
 
     ####################################################################################################################
 
-    test_batch_size = 512
+    test_batch_size = 128
 
     test_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'test'))
     test_files_names = sorted([test_files for test_files in os.listdir(test_path)])
@@ -314,7 +314,7 @@ def main(_):
 
         batch_size = min(test_batch_size, set_size - i)
         total_accuracy += (test_accuracy * batch_size) / set_size
-    tf.logging.info('Final test accuracy = %.1f%% (N=%d)' % (total_accuracy * 100, set_size))
+    tf.logging.info('Final test all accuracy = %.1f%% (N=%d)' % (total_accuracy * 100, set_size))
 
     index2word = {audio_processor.word_to_index[word]: word for word in audio_processor.word_to_index}
 
@@ -372,7 +372,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--unknown_percentage',
         type=float,
-        default=10.0,
+        default=0.0,
         help="""\
       How much of the training data should be unknown words.
       """)
@@ -406,7 +406,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--clip_duration_ms',
         type=int,
-        default=1000,
+        default=3000,
+        # TODO
         help='Expected duration in milliseconds of the wavs', )
 
     parser.add_argument(
@@ -460,7 +461,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--wanted_words',
         type=str,
-        default='background,bags,door,knocking_door,ring,speech,tool,keyboard',
+        default='background,bags,door,knocking_door,ring,speech,tool,keyboard,unknown',
         help='Words to use (others will be added to an unknown label)', )
 
     parser.add_argument(

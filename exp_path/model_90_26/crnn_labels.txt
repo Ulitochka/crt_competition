@@ -1,0 +1,9 @@
+background
+bags
+door
+knocking_door
+ring
+speech
+tool
+keyboard
+unknown

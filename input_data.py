@@ -38,8 +38,8 @@ from tensorflow.python.platform import gfile
 from tensorflow.python.util import compat
 
 MAX_NUM_WAVS_PER_CLASS = 2 ** 27 - 1  # ~134M
-UNKNOWN_WORD_LABEL = 'unknown'
-UNKNOWN_WORD_INDEX = 1
+# UNKNOWN_WORD_LABEL = 'unknown'
+# UNKNOWN_WORD_INDEX = 1
 BACKGROUND_NOISE_DIR_NAME = '_background_noise_'
 RANDOM_SEED = 59185
 
@@ -53,7 +53,7 @@ def prepare_words_list(wanted_words):
     Returns:
       List with the standard silence and unknown tokens added.
     """
-    return [UNKNOWN_WORD_LABEL] + wanted_words
+    return wanted_words  # return [UNKNOWN_WORD_LABEL] + wanted_words
 
 
 def which_set(filename, validation_percentage):
@@ -189,7 +189,7 @@ class AudioProcessor(object):
         random.seed(RANDOM_SEED)
         wanted_words_index = {}
         for index, wanted_word in enumerate(wanted_words):
-            wanted_words_index[wanted_word] = index + 1
+            wanted_words_index[wanted_word] = index     # index + 1
         self.data_index = {'validation': [], 'training': []}
         unknown_index = {'validation': [], 'training': []}
         all_words = {}
@@ -239,7 +239,7 @@ class AudioProcessor(object):
             if word in wanted_words_index:
                 self.word_to_index[word] = wanted_words_index[word]
             else:
-                self.word_to_index[word] = UNKNOWN_WORD_INDEX
+                pass # self.word_to_index[word] = UNKNOWN_WORD_INDEX
 
     def prepare_background_data(self):
         """Searches a folder for background noise audio, and loads it into memory.
@@ -434,10 +434,9 @@ class AudioProcessor(object):
             data[i - offset, :] = sess.run(self.mfcc_, feed_dict=input_dict).flatten()
             # print(self.word_to_index)
 
-            self.word_to_index["unknown"] = 1
+            # self.word_to_index["unknown"] = 1
             label_index = self.word_to_index[sample['label']]
             labels[i - offset, label_index] = 1
-
 
         return data, labels
 
